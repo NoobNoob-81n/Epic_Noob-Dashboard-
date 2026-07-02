@@ -1,0 +1,121 @@
+/* ════════════════════════════════════════════════════════════════
+   🎨 THEME SYSTEM
+   Four themes, each just a set of CSS variables. Every component
+   in the dashboard reads colors from these variables (var(--bg),
+   var(--accent), etc.) instead of hardcoding hex values, so adding
+   a 5th theme later is just adding one more block here.
+
+   Applied via a `data-theme="..."` attribute on <html>, set by
+   ThemeProvider (lib/theme-provider.jsx) based on the user's saved
+   preference.
+   ════════════════════════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme 1: Monochrome (default) ──
+   Dark, moody, near-black with a single sharp accent. Inspired by
+   IDE/terminal aesthetics — restrained, high-contrast, no gradients. */
+[data-theme='monochrome'] {
+    --bg:            #0a0a0a;
+    --bg-elevated:   #141414;
+    --bg-card:       #1a1a1a;
+    --border:        #2a2a2a;
+    --text:          #f2f2f2;
+    --text-muted:    #8a8a8a;
+    --accent:        #d4ff4f;
+    --accent-text:   #0a0a0a;
+    --success:       #4fffa0;
+    --warning:       #ffcc4f;
+    --danger:        #ff4f6b;
+    --radius:        2px;
+    --font-display:  'JetBrains Mono', monospace;
+    --font-body:     'Inter', sans-serif;
+}
+
+/* ── Theme 2: Discord ──
+   Familiar dark navy + blurple, matches Discord's own client so it
+   feels like a natural extension of the app people already use. */
+[data-theme='discord'] {
+    --bg:            #1e1f22;
+    --bg-elevated:   #2b2d31;
+    --bg-card:       #313338;
+    --border:        #3f4147;
+    --text:          #f2f3f5;
+    --text-muted:    #949ba4;
+    --accent:        #5865f2;
+    --accent-text:   #ffffff;
+    --success:       #23a55a;
+    --warning:       #f0b132;
+    --danger:        #f23f42;
+    --radius:        8px;
+    --font-display:  'Inter', sans-serif;
+    --font-body:     'Inter', sans-serif;
+}
+
+/* ── Theme 3: Light ──
+   Clean light mode for anyone who prefers it during the day. */
+[data-theme='light'] {
+    --bg:            #fafafa;
+    --bg-elevated:   #ffffff;
+    --bg-card:       #ffffff;
+    --border:        #e5e5e5;
+    --text:          #18181b;
+    --text-muted:    #71717a;
+    --accent:        #4f46e5;
+    --accent-text:   #ffffff;
+    --success:       #16a34a;
+    --warning:       #d97706;
+    --danger:        #dc2626;
+    --radius:        6px;
+    --font-display:  'Inter', sans-serif;
+    --font-body:     'Inter', sans-serif;
+}
+
+/* ── Theme 4: Neon ──
+   Black background, glowing accent, inspired by the bot's own neon
+   smiley-face logo. High-energy, glow effects on interactive elements. */
+[data-theme='neon'] {
+    --bg:            #050507;
+    --bg-elevated:   #0d0d12;
+    --bg-card:       #12121a;
+    --border:        #23232f;
+    --text:          #f5f5ff;
+    --text-muted:    #8888a0;
+    --accent:        #39ff88;
+    --accent-text:   #05070a;
+    --accent-glow:   0 0 12px rgba(57,255,136,0.55), 0 0 2px rgba(57,255,136,0.9);
+    --success:       #39ff88;
+    --warning:       #ffe94f;
+    --danger:        #ff4f7e;
+    --radius:        10px;
+    --font-display:  'JetBrains Mono', monospace;
+    --font-body:     'Inter', sans-serif;
+}
+
+/* Fallback so themes without --accent-glow don't error — glow is a
+   no-op box-shadow unless the active theme defines it. */
+:root { --accent-glow: none; }
+
+html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.surface        { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius); }
+.card           { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); }
+.text-accent    { color: var(--accent); }
+.bg-accent      { background: var(--accent); color: var(--accent-text); box-shadow: var(--accent-glow); }
+.text-muted     { color: var(--text-muted); }
+.border-theme   { border-color: var(--border); }
+
+[data-theme='neon'] .card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--accent-glow);
+}
+[data-theme='neon'] .bg-accent {
+    box-shadow: var(--accent-glow);
+}
