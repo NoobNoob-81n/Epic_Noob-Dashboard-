@@ -1,3 +1,4 @@
+// force-rebuild-cache-bust
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
