@@ -16,7 +16,7 @@ export default function LogsPage() {
     const [saved, setSaved] = useState(false);
     const [busy, setBusy] = useState(false);
 
-    useEffect(() => {
+    
     useEffect(() => {
         (async () => {
             try {
