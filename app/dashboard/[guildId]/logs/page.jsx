@@ -17,12 +17,11 @@ export default function LogsPage() {
     const [busy, setBusy] = useState(false);
 
     useEffect(() => {
+    useEffect(() => {
         (async () => {
             try {
-                const [cfgRes, chRes] = await Promise.all([
-                    apiFetch(`/api/guild/${guildId}/logs`),
-                    apiFetch(`/api/guild/${guildId}/logs/channels`),
-                ]);
+                const cfgRes = await apiFetch(`/api/guild/${guildId}/logs`);
+                const chRes = await apiFetch(`/api/guild/${guildId}/logs/channels`);
                 setChannels(chRes.channels);
                 if (cfgRes.config) {
                     setSelected(cfgRes.config.channelId);
@@ -33,7 +32,7 @@ export default function LogsPage() {
             }
         })();
     }, [guildId]);
-
+        
     const save = async () => {
         if (!selected) return;
         setBusy(true);
